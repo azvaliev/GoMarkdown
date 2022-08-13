@@ -1,0 +1,36 @@
+<html>  
+    <head>
+        <meta charset="utf-8"/>
+        <title>Markdown Editor</title>
+				<meta name="description" content="The best online markdown editor. Written with WASM" />
+				<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+				<!-- Styles -->
+				<link rel="stylesheet" href="./styles.css" />
+				<!-- WASM -->
+        <script src="wasm_exec.js"></script>
+        <script>
+            const go = new Go();
+            WebAssembly.instantiateStreaming(fetch("out.wasm"), go.importObject).then((result) => {
+                go.run(result.instance);
+            });
+        </script>
+				<!-- Google Fonts -->
+				<link rel="preconnect" href="https://fonts.googleapis.com"> 
+				<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+				<link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+    </head>
+    <body>
+			<h1 class="title">
+				Markdown Editor
+			</h1>
+			<main>
+				<div class="editing-area">
+					<textarea placeholder="Type away, you can preview the result live on the right or below"></textarea>
+				</div>
+				<div class="preview-area">
+
+				</div>
+			</main>
+		</body>
+</html>  
+
