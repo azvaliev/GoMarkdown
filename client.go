@@ -40,8 +40,12 @@ func main() {
       godom.LogErrorf("%s\n%s", err.Msg, err.Stacktrace)
       return
     }
+    
+    // Format the text
+    result := Format(text)
+
     // Set the preview area value
-    preview.SetAttribute("innerHTML", text)
+    preview.SetAttribute("innerHTML", result)
   })
 
   <-make(chan bool)

@@ -13,9 +13,10 @@
 
 
   /* Font Weights */
-  --font-bold: 600;
-  --font-std: 500;
-  --font-light: 400;
+  --font-black: 600;
+  --font-medium: 500;
+  --font-bold: 400;
+	--font-std: 300;
 
   /* Font Sizes */
   --text-4xl: 2rem;
@@ -71,6 +72,19 @@ body {
 *::-webkit-scrollbar-thumb {
   background-color: var(--colors-tertiary);
   border-radius: var(--rounded-sm);
+}
+
+h1, h2, h3, h4, h5, h6 {
+	display: initial;
+}
+h1, h2, h3 {
+	font-weight: var(--font-black);
+}
+h4, h5, h6 {
+	font-weight: var(--font-medium);
+}
+p, span, div {
+	font-weight: var(--font-std);
 }
 h1 {
   font-size: var(--text-4xl)
