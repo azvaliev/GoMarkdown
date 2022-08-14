@@ -43,6 +43,10 @@ jobs:
       actions: read
       contents: read
     
+    env:
+      GOOS: js
+      GOARCH: wasm
+    
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
