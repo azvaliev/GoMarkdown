@@ -14,9 +14,9 @@
 
   /* Font Weights */
   --font-black: 600;
-  --font-medium: 500;
-  --font-bold: 400;
-	--font-std: 300;
+  --font-bold: 500;
+  --font-medium: 400;
+  --font-std: 300;
 
   /* Font Sizes */
   --text-4xl: 2rem;
@@ -54,8 +54,6 @@ body {
   font-family: 'Source Code Pro', monospace;
   margin: 0;
   padding: 0;
-  font-size: var(--text-std);
-  line-height: 1.4;
   border: none;
 
   /* Scrollbar styles for FireFox */
@@ -74,17 +72,21 @@ body {
   border-radius: var(--rounded-sm);
 }
 
+/* Preview text styles */
+:is(h1, h2, h3, h4, h5, h6) > b {
+  font-weight: var(--font-black);
+}
 h1, h2, h3 {
 	font-weight: var(--font-black);
 }
 h4, h5, h6 {
-	font-weight: var(--font-medium);
+	font-weight: var(--font-bold);
 }
 p, span, div {
 	font-weight: var(--font-std);
 }
 h1 {
-  font-size: var(--text-4xl)
+  font-size: var(--text-4xl);
 }
 h2 {
   font-size: var(--text-3xl);
@@ -102,6 +104,10 @@ h6 {
   font-size: var(--text-md);
 }
 
+b {
+  font-weight: var(--font-medium);
+}
+
 /* Styles for page */
 .title {
   text-align: center;
@@ -115,7 +121,7 @@ main {
   min-height: 0;
 }
 
-/* Editing area styles */
+/* Editing / preview area styles */
 .editing-area {
   display: flex;
 }
@@ -129,6 +135,7 @@ main {
   background-color: var(--colors-secondary);
   resize: none;
   font-size: var(--text-std);
+  line-height: 1.4;
 }
 .editing-area > textarea::placeholder {
   color: var(--colors-text-secondary);
