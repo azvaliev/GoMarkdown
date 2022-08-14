@@ -15,6 +15,11 @@ describe('Simple bold usage', () => {
     );
   });
 
+  // Create a test that will fail
+  it('should fail', () => {
+    expect(true).to.equal(false);
+  })
+
   altTestCases.forEach((testCase, name) => {
     it(name, () => {
       typeInput(testCase.input);
