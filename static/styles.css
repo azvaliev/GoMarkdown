@@ -104,8 +104,14 @@ h6 {
   font-size: var(--text-md);
 }
 
+p {
+  margin-bottom: 0.5rem;
+}
 b {
   font-weight: var(--font-medium);
+}
+i {
+  font-style: italic;
 }
 
 /* Styles for page */

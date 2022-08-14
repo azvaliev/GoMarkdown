@@ -8,13 +8,15 @@ import (
 )
 
 type MdRegExps struct {
-	NewLine, Headers, Bold *regexp.Regexp
+	Bold, Italic, LineBreak, Paragraph, Headers *regexp.Regexp
 }
 
 var fmtRegExps = MdRegExps{
-	NewLine: regexp.MustCompile(`(?m)^([^#|\n]*)(?:\n| {2})$\n`),
-	Headers: regexp.MustCompile(`(?mi)(#{1,6}) ([^\n]+)`),
-	Bold:    regexp.MustCompile(`(?m)(?:\*\*(.+)\*\*)|(?:(\W)__(.+)__(\W))`),
+	Bold:      regexp.MustCompile(`(?m)(?:\*\*(.+)\*\*)|(?:(\W)__(.+)__(\W))`),
+	Italic:    regexp.MustCompile(`(?m)(?:\*(.+)\*)|(?:(\W)_(.+)_(\W))`),
+	LineBreak: regexp.MustCompile(`(?m)^([^#\n])([^\n]*)(?: {2})$\n`),
+	Paragraph: regexp.MustCompile(`(?m)^([^#\n])([^\n]*)(?:\n\n)`),
+	Headers:   regexp.MustCompile(`(?m)(#{1,6}) ([^\n]+)`),
 }
 
 func Format(raw string) string {
@@ -24,8 +26,14 @@ func Format(raw string) string {
 	// Add bold
 	formatted = fmtRegExps.Bold.ReplaceAllString(sanitizedRaw, "$2<b>$1$3</b>$4")
 
+	// Add italic
+	formatted = fmtRegExps.Italic.ReplaceAllString(formatted, "$2<i>$1$3</i>$4")
+
 	// Add newlines
-	formatted = fmtRegExps.NewLine.ReplaceAllString(formatted, "$1<br>")
+	formatted = fmtRegExps.LineBreak.ReplaceAllString(formatted, "$1$2<br>")
+
+	// Add paragraphs
+	formatted = fmtRegExps.Paragraph.ReplaceAllString(formatted, "<p>$1$2</p>")
 
 	// Add headers
 	formatted = fmtRegExps.Headers.ReplaceAllStringFunc(formatted, func(match string) string {
