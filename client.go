@@ -34,18 +34,21 @@ func main() {
 
 	// Listen for textarea changes
 	textarea.AddEventListener("input", func(this *godom.Element, e godom.Event) {
-		// Get the textarea value
-		text, err := this.GetAttribute("value")
-		if err != nil {
-			godom.LogErrorf("%s\n%s", err.Msg, err.Stacktrace)
-			return
-		}
+		godom.Debounce(func() {
+			// Get the textarea value
+			text, err := this.GetAttribute("value")
+			if err != nil {
+				godom.LogErrorf("%s\n%s", err.Msg, err.Stacktrace)
+				return
+			}
 
-		// Format the text
-		result := Format(text)
+			// Format the text
+			result := Format(text)
 
-		// Set the preview area value
-		preview.SetAttribute("innerHTML", result)
+			// Set the preview area value
+			preview.SetAttribute("innerHTML", result)
+
+		}, 25)()
 	})
 
 	<-make(chan bool)

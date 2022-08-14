@@ -74,9 +74,6 @@ body {
   border-radius: var(--rounded-sm);
 }
 
-/* h1, h2, h3, h4, h5, h6 { */
-/* 	display: initial; */
-/* } */
 h1, h2, h3 {
 	font-weight: var(--font-black);
 }
@@ -115,6 +112,7 @@ main {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--gap-md);
+  min-height: 0;
 }
 
 /* Editing area styles */
@@ -142,7 +140,12 @@ main {
   }
   body {
     padding: 0 5vw 0.5em; 
-    height: 90vh;
+  }
+  /* Safari iOS specific styling */
+  @supports (-webkit-touch-callout: none) { 
+    body {
+      height: 90vh;
+    }
   }
   main {
     grid-template-rows: 1fr 1fr;
