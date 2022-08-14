@@ -33,4 +33,4 @@ jobs:
           node-version: 16
 
       - name: Run Cypress tests
-        run: Make test
+        run: make test
