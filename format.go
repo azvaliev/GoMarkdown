@@ -12,10 +12,10 @@ type MdRegExps struct {
 }
 
 var fmtRegExps = MdRegExps{
-	Bold:      regexp.MustCompile(`(?m)(?:\*\*(.+)\*\*)|(?:(\W)__(.+)__(\W))`),
+	Bold:      regexp.MustCompile(`(?m)(?:\*\*((?:\n[^\n]|[^*])+)\*\*)|(?:(\b)__((?:\n[^\n]|[^_])+)__(\b))`),
 	Italic:    regexp.MustCompile(`(?m)(?:\*(.+)\*)|(?:(\W)_(.+)_(\W))`),
 	LineBreak: regexp.MustCompile(`(?m)^([^#\n])([^\n]*)(?: {2})$\n`),
-	Paragraph: regexp.MustCompile(`(?m)^([^#\n])([^\n]*)(?:\n\n)`),
+	Paragraph: regexp.MustCompile(`(?m)^([^#\n])((?:\n[^\n]|.)*)(?:(?:\n\n)|\z)`),
 	Headers:   regexp.MustCompile(`(?m)(#{1,6}) ([^\n]+)`),
 }
 

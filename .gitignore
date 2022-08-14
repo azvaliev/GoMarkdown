@@ -9,3 +9,13 @@
 
 # MacOs
 .DS_Store
+
+# Cypress
+cypress/videos
+cypress/screenshots
+.history
+.publish
+_test-output
+cypress.zip
+.babel-cache
+
