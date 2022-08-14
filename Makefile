@@ -8,5 +8,6 @@ dev:
 	npx kill-port 3000
 	npx http-server ./static -p 3000
 test:
+	npx kill-port 3000
 	make dev & npx wait-on http://localhost:3000 -i 500
 	npx cypress run
