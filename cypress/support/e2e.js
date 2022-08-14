@@ -14,7 +14,12 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
+import {init} from '../e2e/utils'
 import './commands'
+
+beforeEach(() => {
+  init();
+})
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')

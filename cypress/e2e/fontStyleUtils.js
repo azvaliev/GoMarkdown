@@ -43,7 +43,7 @@ export const generateFontStyleTestCases = (type, expectedTag) => {
     input: `This is a ${type}test\n${type}`,
     output: wrapInP(`This is a <${expectedTag}>test\n</${expectedTag}>`)
   });
-  
+
   const advancedTestCases = new Map();
   advancedTestCases.set(`Multiple ${typeName}`, {
     input: `This is a ${type}test${type} ${type}test${type}`,
@@ -59,7 +59,7 @@ export const generateFontStyleTestCases = (type, expectedTag) => {
     input: `This is a ${type}test&!^@=+${type}, ${type}t@es!t&!+${type}`,
     output: wrapInP(`This is a <${expectedTag}>test&amp;!^@=+</${expectedTag}>, <${expectedTag}>t@es!t&amp;!+</${expectedTag}>`)
   });
-  
+
   advancedTestCases.set(`Multiple ${typeName} with only numbers`, {
     input: `${type}123${type} ${type}456${type}`,
     output: wrapInP(`<${expectedTag}>123</${expectedTag}> <${expectedTag}>456</${expectedTag}>`)

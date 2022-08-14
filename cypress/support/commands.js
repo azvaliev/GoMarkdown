@@ -1,3 +1,5 @@
+import { checkOutput, typeInput } from "../e2e/utils";
+
 // ***********************************************
 // This example commands.js shows you how to
 // create various custom commands and overwrite
@@ -23,3 +25,10 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('typeInput', typeInput);
+Cypress.Commands.add('checkOutput', checkOutput);
+Cypress.Commands.add('testIO', (input, output) => {
+  cy.typeInput(input);
+  cy.checkOutput(output);
+});
