@@ -2,10 +2,10 @@ import { typeInput, checkOutput, init } from "./utils";
 import { generateFontStyleTestCases } from "./fontStyleUtils";
 
 
-const [testCases, advancedTestCases] = generateFontStyleTestCases('**', 'b');
-const [altTestCases, altAdvancedTestCases] = generateFontStyleTestCases('__', 'b');
+const [testCases, advancedTestCases] = generateFontStyleTestCases('*', 'i');
+const [altTestCases, altAdvancedTestCases] = generateFontStyleTestCases('_', 'i');
 
-describe('Simple bold usage', () => {
+describe('Simple italic usage', () => {
   beforeEach(init);
   testCases.forEach((testCase, name) => {
     it(name, () => {
@@ -24,7 +24,7 @@ describe('Simple bold usage', () => {
   });
 })
 
-describe('Advanced bold usage', () => {
+describe('Advanced italic usage', () => {
   beforeEach(init);
   advancedTestCases.forEach((testCase, name) => {
     it(name, () => {
@@ -41,3 +41,4 @@ describe('Advanced bold usage', () => {
     );
   });
 })
+
