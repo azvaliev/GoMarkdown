@@ -10,6 +10,9 @@
 # MacOs
 .DS_Store
 
+# WASM compiler
+static/wasm_exec.js
+
 # Cypress
 cypress/videos
 cypress/screenshots
