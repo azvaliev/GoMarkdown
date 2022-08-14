@@ -65,6 +65,18 @@ export const generateFontStyleTestCases = (type, expectedTag) => {
     output: wrapInP(`<${expectedTag}>123</${expectedTag}> <${expectedTag}>456</${expectedTag}>`)
   });
 
+  advancedTestCases.set(`Multiple ${typeName} with only numbers and h`, {
+    input: `h ${type} 1h23h ${type} h ${type} h45h6h ${type}`,
+    output: wrapInP(`h <${expectedTag}> 1h23h </${expectedTag}> h <${expectedTag}> h45h6h </${expectedTag}>`)
+  });
+
+  if (type !== '__' && type !== '_') {
+    advancedTestCases.set(`Multiple ${typeName} with numbers, h and <>`, {
+      input: `<h${type}1h>23h${type} <h${type}h45h>6${type}<h`,
+      output: wrapInP(`&lt;h<${expectedTag}>1h&gt;23h</${expectedTag}> &lt;h<${expectedTag}>h45h&gt;6</${expectedTag}>&lt;h`)
+    });
+  };
+
   advancedTestCases.set(`Multiple ${typeName} with only numbers and special characters (&!^@=+)`, {
     input: `${type}123&!^@=+${type} ${type}456&!^@=+${type}`,
     output: wrapInP(`<${expectedTag}>123&amp;!^@=+</${expectedTag}> <${expectedTag}>456&amp;!^@=+</${expectedTag}>`)

@@ -1,6 +1,5 @@
 const testCases = new Map();
 
-// Create some test cases for markdown linebreak
 testCases.set(`basic`, {
   input: `foo  \nbar`,
   output: `<p>foo<br>bar</p>`,
