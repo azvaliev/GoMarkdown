@@ -32,3 +32,30 @@ jobs:
 
       - name: Run Cypress tests
         run: make test
+  CodeQL:
+    runs-on: ubuntu-latest
+  
+    permissions:
+      # required for all workflows
+      security-events: write
+
+      # only required for workflows in private repositories
+      actions: read
+      contents: read
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Initializes the CodeQL tools for scanning.
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: go, javascript
+      
+      - name: Compile
+        run: make build
+        
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v2
+      
