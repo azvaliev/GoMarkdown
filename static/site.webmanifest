@@ -2,7 +2,8 @@
     "name": "GoMarkdown",
     "short_name": "GoMarkdown",
     "description": "Markdown editor written in Go using WASM",
-    "start_url": "/",
+    "start_url": ".",
+    "scope": "/",
     "icons": [
         {
             "src": "/assets/icons/android-chrome-192x192.png",
