@@ -39,6 +39,8 @@ self.addEventListener('fetch', function (event) {
     request.headers.get('Accept').includes('text/html')
     || request.headers.get('Accept').includes('application/javascript')
     || request.headers.get('Accept').includes('application/wasm')
+    || request.url.endsWith('.wasm')
+    || request.url.includes('.js')
   ) {
     event.respondWith(
       fetch(request).then(function (response) {
