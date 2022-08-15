@@ -6,7 +6,7 @@ let coreAssets = [
   // Style
   '/assets/styles/styles.css',
   // PWA
-  '/assets/scripts/sw.js',
+  '/sw.js',
   '/browserconfig.xml',
   '/site.webmanifest',
 ];
