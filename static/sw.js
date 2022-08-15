@@ -33,9 +33,13 @@ self.addEventListener('fetch', function (event) {
   // https://stackoverflow.com/a/49719964
   if (event.request.cache === 'only-if-cached' && event.request.mode !== 'same-origin') return;
 
-  // HTML files
+  // HTML, JS & WASM files
   // Network-first
-  if (request.headers.get('Accept').includes('text/html')) {
+  if (
+    request.headers.get('Accept').includes('text/html')
+    || request.headers.get('Accept').includes('application/javascript')
+    || request.headers.get('Accept').includes('application/wasm')
+  ) {
     event.respondWith(
       fetch(request).then(function (response) {
         // Create a copy of the response and save it to the cache
@@ -56,9 +60,9 @@ self.addEventListener('fetch', function (event) {
     );
   }
 
-  // CSS & JavaScript
+  // CSS
   // Offline-first
-  if (request.headers.get('Accept').includes('text/css') || request.headers.get('Accept').includes('text/javascript')) {
+  if (request.headers.get('Accept').includes('text/css')) {
     event.respondWith(
       caches.match(request).then(function (response) {
         return response || fetch(request).then(function (response) {

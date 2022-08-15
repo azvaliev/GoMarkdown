@@ -10,14 +10,20 @@
     <link rel="stylesheet" href="assets/styles.css" />
 
     <!-- WASM -->
-    <script src="/assets/scripts/wasm_exec.js"></script>
+    <script type="application/javascript" src="/assets/scripts/wasm_exec.js"></script>
     <script>
       const go = new Go();
-      WebAssembly.instantiateStreaming(fetch("/assets/scripts/out.wasm"), go.importObject).then((result) => {
-        go.run(result.instance);
+      WebAssembly.instantiateStreaming(
+        fetch("/assets/scripts/out.wasm", {
+          headers: {
+            'Accept': 'application/wasm'
+          }
+        }),
+        go.importObject).then((result) => {
+          go.run(result.instance);
       });
     </script>
-    <script defer>
+    <script async defer>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
           navigator.serviceWorker.register('/sw.js').then((reg) => {
