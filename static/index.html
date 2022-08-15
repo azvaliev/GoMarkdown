@@ -1,40 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">  
+<html lang="en">
   <head>
     <meta charset="utf-8"/>
-    <title>Markdown Editor</title>
+    <title>GoMarkdown</title>
     <meta name="description" content="The best online markdown editor. Written with WASM" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
     <!-- Styles -->
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="assets/styles.css" />
+
     <!-- WASM -->
-    <script src="wasm_exec.js"></script>
+    <script src="/assets/scripts/wasm_exec.js"></script>
     <script>
-    const go = new Go();
-    WebAssembly.instantiateStreaming(fetch("out.wasm"), go.importObject).then((result) => {
-    go.run(result.instance);
-    });
+      const go = new Go();
+      WebAssembly.instantiateStreaming(fetch("/assets/scripts/out.wasm"), go.importObject).then((result) => {
+        go.run(result.instance);
+      });
     </script>
+    <script defer>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/assets/scripts/sw.js', {
+          }).then((reg) => {
+            console.log('Registered Service Worker for GoMarkdown');
+          });
+        });
+      }
+    </script>
+
     <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com"> 
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+
+    <!-- PWA -->
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/assets/icons/safari-pinned-tab.svg" color="#100c08">
+    <link rel="shortcut icon" href="/assets/icons/favicon.ico">
+    <meta name="apple-mobile-web-app-title" content="GoMarkdown">
+    <meta name="application-name" content="GoMarkdown">
+    <meta name="msapplication-TileColor" content="#2b5797">
+    <meta name="msapplication-TileImage" content="/assets/icons/mstile-144x144.png">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    <meta name="theme-color" content="#100c08">
+
+    <!-- Favicons-->
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
   </head>
 
   <body>
     <h1 class="title">
-      Markdown Editor
+      GoMarkdown
     </h1>
+
     <main>
       <div class="editing-area">
-        <textarea 
+        <textarea
         placeholder="Type away, you can preview the result live on the right or below"
         ></textarea>
       </div>
-      <div class="preview-area">
 
+      <div class="preview-area">
       </div>
     </main>
   </body>
-</html>  
-
+</html>
