@@ -4,7 +4,7 @@ let coreAssets = [
   '/assets/scripts/wasm_exec.js',
   '/assets/scripts/out.wasm',
   // Style
-  '/assets/styles/styles.css',
+  '/assets/styles.css',
   // PWA
   '/sw.js',
   '/browserconfig.xml',
