@@ -28,7 +28,7 @@ testCases.set(
 );
 
 testCases.set(
-  'Can use local id-based links',
+  'Can use fragments',
   {
     input: '[Hello](#hello)',
     output: '<p><a href="#hello" rel="noopener noreferrer">Hello</a></p>',
@@ -36,7 +36,7 @@ testCases.set(
 );
 
 testCases.set(
-  'Can parse local id-based links back-to-back',
+  'Can parse fragments back-to-back',
   {
     input: '[Hello](#hello)[World](#world)',
     output: (
@@ -101,7 +101,28 @@ testCases.set(
     input: '[Foo](https://google.com/#foo)',
     output: (
       `<p><a href="https://google.com/#foo" rel="noopener noreferrer" target="_blank">Foo</a></p>`
-    ) 
+    )
+  }
+)
+
+testCases.set(
+  'Handles fragments strange characters',
+  {
+    input: '[&f^|b](#fdgs8432_f+)',
+    output: (
+      `<p><a href="#fdgs8432_f+" rel="noopener noreferrer">&amp;f^|b</a></p>`
+    )
+  }
+)
+
+testCases.set(
+  'Handles link strange characters',
+  {
+    input: '[iaz6&z](https://amazing-website.com/foo/5234?bazz=baz&baz=%2569)',
+    output: (
+      `<p><a href="https://amazing-website.com/foo/5234?bazz=baz&amp;baz=%2569" ` +
+      `rel="noopener noreferrer" target="_blank">iaz6&amp;z</a></p>`
+    )
   }
 )
 
