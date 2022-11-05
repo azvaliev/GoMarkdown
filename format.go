@@ -18,7 +18,7 @@ var fmtRegExps = MdRegExps{
 	LineBreak: regexp.MustCompile(`(?m)^([^#\n])([^\n]*)(?: {2})$\n`),
 	Paragraph: regexp.MustCompile(`(?m)^((?:<[^h>|<h[^\d])|[^#\n])((?:\n[^\n]|<[^h]|<h[^\d]|[^h]\d|[^<][h][\d]|[^\d<\n])*)(?:\n\n|\n?\z|\n(<[h]))`),
 	Header:   regexp.MustCompile(`(?m)(#{1,6}) ([^\n]+)`),
-  Link: regexp.MustCompile(`(?m)\[([^\n\]]+)\]\((#[^\n]+|https?://[^\n)]+)\)`),
+  Link: regexp.MustCompile(`(?m)\[([^\n\]]+)\]\((#[^\n)]+|https?://[^\n)]+)\)`),
 }
 
 var linkSplitter = regexp.MustCompile(`(?m)(#|http)`)
