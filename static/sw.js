@@ -33,7 +33,7 @@ self.addEventListener('fetch', function (event) {
   // https://stackoverflow.com/a/49719964
   if (event.request.cache === 'only-if-cached' && event.request.mode !== 'same-origin') return;
 
-  // HTML, JS & WASM files
+  // HTML, CSS, JS & WASM files
   // Network-first
   if (
     request.headers.get('Accept').includes('text/html')
@@ -41,6 +41,7 @@ self.addEventListener('fetch', function (event) {
     || request.headers.get('Accept').includes('application/wasm')
     || request.url.endsWith('.wasm')
     || request.url.includes('.js')
+    || request.headers.get('Accept').includes('text/css')
   ) {
     event.respondWith(
       fetch(request).then(function (response) {
@@ -60,20 +61,6 @@ self.addEventListener('fetch', function (event) {
           });
         })
     );
-  }
-
-  // CSS
-  // Offline-first
-  if (request.headers.get('Accept').includes('text/css')) {
-    event.respondWith(
-      caches.match(request).then(function (response) {
-        return response || fetch(request).then(function (response) {
-          // Return the response
-          return response;
-        });
-      })
-    );
-    return;
   }
 
   // Images
