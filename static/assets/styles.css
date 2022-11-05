@@ -85,6 +85,12 @@ h4, h5, h6 {
 p, span, div {
 	font-weight: var(--font-std);
 }
+ul {
+  padding-inline-start: 1.5em;
+}
+ol {
+  padding-inline-start: 2.5em;
+}
 h1 {
   font-size: var(--text-4xl);
 }
