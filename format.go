@@ -51,7 +51,7 @@ func Format(raw string) string {
     text, link := parts[0], parts[1]
     fmt.Println(text, link)
 
-    if (strings.Contains(link, ":")) {
+    if (strings.Contains(link, "://") && !strings.HasPrefix(link, "http")) {
       return `<a href="http` + link[0:len(link) -1] + `" rel="noopener noreferrer" target="_blank">` + text[1:len(text) -2] + `</a>`
     }
 
