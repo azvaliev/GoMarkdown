@@ -147,7 +147,7 @@ testCases.set(`Sample file with headers, bold, italic, links and multiple paragr
     `This is a fragment link</a><br>` +
     `<a href="https://link-to-somewhere.com" rel="noopener noreferrer" ` +
     `target="_blank">This is standard link</a></p>`
-  ),
+  )
 });
 
 describe('Combined tests', () => {
