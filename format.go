@@ -3,12 +3,13 @@ package main
 import (
 	"fmt"
 	"regexp"
+	"strings"
 
 	"html/template"
 )
 
 type MdRegExps struct {
-	Bold, Italic, LineBreak, Paragraph, Headers *regexp.Regexp
+	Bold, Italic, LineBreak, Paragraph, Header, Link *regexp.Regexp
 }
 
 var fmtRegExps = MdRegExps{
@@ -16,8 +17,11 @@ var fmtRegExps = MdRegExps{
 	Italic:    regexp.MustCompile(`(?m)(?:\*((?:\n[^\n]|[^*])+)\*)|(?:(\b)_((?:\n[^\n]|[^_])+)_(\b))`),
 	LineBreak: regexp.MustCompile(`(?m)^([^#\n])([^\n]*)(?: {2})$\n`),
 	Paragraph: regexp.MustCompile(`(?m)^((?:<[^h>|<h[^\d])|[^#\n])((?:\n[^\n]|<[^h]|<h[^\d]|[^h]\d|[^<][h][\d]|[^\d<\n])*)(?:\n\n|\n?\z|\n(<[h]))`),
-	Headers:   regexp.MustCompile(`(?m)(#{1,6}) ([^\n]+)`),
+	Header:   regexp.MustCompile(`(?m)(#{1,6}) ([^\n]+)`),
+  Link: regexp.MustCompile(`(?m)\[([^\n\]]+)\]\((#[^\n)]+|https?://[^\n)]+)\)`),
 }
+
+var linkSplitter = regexp.MustCompile(`(?m)(#|http)`)
 
 func Format(raw string) string {
 	sanitizedRaw := template.HTMLEscapeString(raw)
@@ -33,14 +37,28 @@ func Format(raw string) string {
 	formatted = fmtRegExps.LineBreak.ReplaceAllString(formatted, "$1$2<br />")
 
 	// Add headers
-	formatted = fmtRegExps.Headers.ReplaceAllStringFunc(formatted, func(match string) string {
-		parts := fmtRegExps.Headers.FindAllStringSubmatch(match, 1)[0][1:]
+	formatted = fmtRegExps.Header.ReplaceAllStringFunc(formatted, func(match string) string {
+		parts := fmtRegExps.Header.FindAllStringSubmatch(match, 1)[0][1:]
 		level, content := len(parts[0]), parts[1]
 		return fmt.Sprintf("<h%d>%s</h%d>", level, content, level)
 	})
 
 	// Add paragraphs
 	formatted = fmtRegExps.Paragraph.ReplaceAllString(formatted, "<p>$1$2</p>$3")
+
+  formatted = fmtRegExps.Link.ReplaceAllStringFunc(formatted, func (match string) string {
+    parts := linkSplitter.Split(match, 2)
+    text, link := parts[0], parts[1]
+    fmt.Println(text, link)
+
+    if (strings.Contains(link, "://") && !strings.HasPrefix(link, "http")) {
+      return `<a href="http` + link[0:len(link) -1] + `" rel="noopener noreferrer" target="_blank">` + text[1:len(text) -2] + `</a>`
+    }
+
+    return `<a href="#` + link[0:len(link) - 1] + `" rel="noopener noreferrer">` + text[1:len(text) -2] + `</a>`
+  })
+
+  fmt.Println(formatted);
 
 	return formatted
 }

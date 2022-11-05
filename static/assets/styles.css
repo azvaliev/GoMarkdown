@@ -104,6 +104,10 @@ h6 {
   font-size: var(--text-md);
 }
 
+a {
+  white-space: pre-wrap;
+  color: var(--colors-accent);
+}
 p {
   margin-bottom: 0.5rem;
 }
