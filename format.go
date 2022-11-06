@@ -46,8 +46,6 @@ func Format(raw string) string {
 		return `<ol>` + listSplitter.ReplaceAllString(match, "<li>$1</li>") + `</ol>`
 	})
 
-	fmt.Println(formatted)
-
 	// Add newlines
 	formatted = fmtRegExps.LineBreak.ReplaceAllString(formatted, "$1$2<br />")
 
