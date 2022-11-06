@@ -23,7 +23,7 @@ var fmtRegExps = MdRegExps{
 }
 
 var linkSplitter *regexp.Regexp = regexp.MustCompile(`(?m)(#|http)`)
-var listSplitter *regexp.Regexp = regexp.MustCompile(`(?m)(?:-|\d.) ([^\n]*)`)
+var listSplitter *regexp.Regexp = regexp.MustCompile(`(?m)\n?(?:-|\d.) ([^\n]*)`)
 
 func Format(raw string) string {
 	sanitizedRaw := template.HTMLEscapeString(raw)
