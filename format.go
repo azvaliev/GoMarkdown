@@ -23,7 +23,9 @@ var fmtRegExps = MdRegExps{
 }
 
 var linkSplitter *regexp.Regexp = regexp.MustCompile(`(?m)(#|http)`)
-var listSplitter *regexp.Regexp = regexp.MustCompile(`(?m)\n?(?:-|\d.) ([^\n]*)`)
+var listSplitter *regexp.Regexp = regexp.MustCompile(`(?m)\n?(?:-|\d.) ([^\n]*(?:[\n]\s+([^\s\d-])(?:[^\n]|\n\s)*)?)`)
+
+// old (?m)\n?(?:-|\d.) ([^\n]*(?:[\n]\s+(?:[^\s-])(?:[^\n]|\n\s)*)?) 
 
 func Format(raw string) string {
 	sanitizedRaw := template.HTMLEscapeString(raw)
@@ -36,15 +38,7 @@ func Format(raw string) string {
 	formatted = fmtRegExps.Italic.ReplaceAllString(formatted, "$2<i>$1$3</i>$4")
 
 	// Add lists
-	formatted = fmtRegExps.List.ReplaceAllStringFunc(formatted, func(match string) string {
-		// unordered list
-		if strings.HasPrefix(match, "-") {
-			return `<ul>` + listSplitter.ReplaceAllString(match, "<li>$1</li>") + `</ul>`
-		}
-
-		// ordered list
-		return `<ol>` + listSplitter.ReplaceAllString(match, "<li>$1</li>") + `</ol>`
-	})
+	formatted = fmtRegExps.List.ReplaceAllStringFunc(formatted, parseList)
 
 	// Add newlines
 	formatted = fmtRegExps.LineBreak.ReplaceAllString(formatted, "$1$2<br />")
@@ -72,3 +66,75 @@ func Format(raw string) string {
 
 	return formatted
 }
+
+	func parseList (match string) string {
+		trimmedMatch := strings.TrimLeft(match, " ");
+		listAsHTML := ""
+
+		isUlStack := []bool{strings.HasPrefix(trimmedMatch, "-")}
+
+		if isUlStack[0] {
+			listAsHTML = "<ul>"
+		} else {
+			listAsHTML = "<ol>"
+		}
+
+		listSplitter.ReplaceAllStringFunc(match, func (listItem string) string {
+      trimmedListItem := strings.TrimSpace(listItem)
+      fmt.Println(listItem, "has prefix -", strings.HasPrefix(listItem, "-"))
+
+			// unordered list
+			if strings.HasPrefix(trimmedListItem, "-") {
+				currentlyIsUl := isUlStack[len(isUlStack) - 1]
+
+        fmt.Println(listItem, currentlyIsUl, isUlStack)
+
+				if currentlyIsUl {
+					listAsHTML += listSplitter.ReplaceAllString(listItem, "<li>$1</li>")
+				} else {
+					if len(isUlStack) > 1 {
+						isUlStack = isUlStack[:len(isUlStack) - 1]
+						listAsHTML += "</ol>"
+					}
+
+					if !isUlStack[len(isUlStack) - 1] {
+						listAsHTML += "<ul>"
+						isUlStack = append(isUlStack, true)
+					}
+
+					listAsHTML += listSplitter.ReplaceAllString(listItem, "<li>$1</li>")
+				}
+			// ordered list
+			} else {
+				currentlyIsUl := isUlStack[len(isUlStack) - 1]
+
+        fmt.Println(listItem, currentlyIsUl, isUlStack)
+
+				if !currentlyIsUl {
+					listAsHTML += listSplitter.ReplaceAllString(listItem, "<li>$1</li>")
+				} else {
+					if len(isUlStack) > 1 {
+						isUlStack = isUlStack[:len(isUlStack) - 1]
+						listAsHTML += "</ul>"
+					}
+					
+					if isUlStack[len(isUlStack) - 1] {
+            fmt.Println("opening ol", listItem)
+						listAsHTML += "<ol>"
+						isUlStack = append(isUlStack, false)
+					}
+
+					listAsHTML += listSplitter.ReplaceAllString(listItem, "<li>$1</li>")
+				}
+			}
+			return ""
+		})
+
+		if isUlStack[0] {
+			listAsHTML += "</ul>"
+		} else {
+			listAsHTML += "</ol>"
+		}
+
+		return listAsHTML
+	}
