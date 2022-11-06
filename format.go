@@ -17,7 +17,7 @@ var fmtRegExps = MdRegExps{
 	Italic:    regexp.MustCompile(`(?m)(?:\*((?:\n[^\n]|[^*])+)\*)|(?:(\b)_((?:\n[^\n]|[^_])+)_(\b))`),
 	List:      regexp.MustCompile(`(?m)((?:-|\d)(?:[^\n]|\n[^#\n])*)`),
 	LineBreak: regexp.MustCompile(`(?m)^([^#\n])([^\n]*)(?: {2})$\n`),
-	Paragraph: regexp.MustCompile(`(?m)^((?:<[^h>|<h[^\d])|[^#\n])((?:\n[^\n]|<[^h]|<h[^\d]|[^h]\d|[^<][h][\d]|[^\d<\n])*)(?:\n\n|\n?\z|\n(<[h]))`),
+	Paragraph: regexp.MustCompile(`(?m)^((?:<[^uoh>|<h[^\d])|[^#\n])((?:\n[^\n]|<[^h]|<h[^\d]|[^h]\d|[^<][h][\d]|[uo][^l]|[uo]l[^>]|[^uo\d<\n])*)(?:\n\n|\n?\z|\n(<[h]))`),
 	Header:    regexp.MustCompile(`(?m)(#{1,6}) ([^\n]+)`),
 	Link:      regexp.MustCompile(`(?m)\[([^\n\]]+)\]\((#[^\n)]+|https?://[^\n)]+)\)`),
 }
@@ -45,6 +45,8 @@ func Format(raw string) string {
 		// ordered list
 		return `<ol>` + listSplitter.ReplaceAllString(match, "<li>$1</li>") + `</ol>`
 	})
+
+	fmt.Println(formatted)
 
 	// Add newlines
 	formatted = fmtRegExps.LineBreak.ReplaceAllString(formatted, "$1$2<br />")
