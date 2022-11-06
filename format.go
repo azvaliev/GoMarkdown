@@ -15,7 +15,7 @@ type MdRegExps struct {
 var fmtRegExps = MdRegExps{
 	Bold:      regexp.MustCompile(`(?m)(?:\*\*((?:\n[^\n]|[^*])+)\*\*)|(?:(\b_?)__((?:\n[^\n]|[^_])+)__(_?\b))`),
 	Italic:    regexp.MustCompile(`(?m)(?:\*((?:\n[^\n]|[^*])+)\*)|(?:(\b)_((?:\n[^\n]|[^_])+)_(\b))`),
-	List:      regexp.MustCompile(`(?m)((?:-|\d)(?:[^\n]|\n[^#\n])*)`),
+	List:      regexp.MustCompile(`(?m)((?:-|\d\.) [\S](?:[^\n]|\n[^#\n])*)`),
 	LineBreak: regexp.MustCompile(`(?m)^([^#\n])([^\n]*)(?: {2})$\n`),
 	Paragraph: regexp.MustCompile(`(?m)^((?:<[^uoh>|<h[^\d])|[^#\n])((?:\n[^\n]|<[^h]|<h[^\d]|[^h]\d|[^<][h][\d]|[uo][^l]|[uo]l[^>]|[^uo\d<\n])*)(?:\n\n|\n?\z|\n(<[h]))`),
 	Header:    regexp.MustCompile(`(?m)(#{1,6}) ([^\n]+)`),
