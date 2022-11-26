@@ -54,6 +54,55 @@ testCases.set(`bold and italic link`, {
   )
 });
 
+testCases.set(`bold list`, {
+  input: '**\n- foo\n- bar\n- bazz\n**',
+  output: (
+    `<b>\n<ul><li>foo</li><li>bar</li><li>bazz</li></ul></b>`
+  )
+});
+
+testCases.set(`italic list`, {
+  input: '_\n1. foo\n2. bar\n3. bazz\n_',
+  output: (
+    `<i>\n<ol><li>foo</li><li>bar</li><li>bazz</li></ol></i>`
+  )
+});
+
+testCases.set(`bold and italic list`, {
+  input: '***\n- foo\n- bar\n- bazz\n***',
+  output: (
+    `<i><b>\n<ul><li>foo</li><li>bar</li><li>bazz</li></ul></b></i>`
+  )
+});
+
+testCases.set(`bold list items`, {
+  input: '1. __foo__\n2. bazz\n2. **bar**',
+  output: (
+    `<ol><li><b>foo</b></li><li>bazz</li><li><b>bar</b></li></ol>`
+  )
+});
+
+testCases.set(`italic list items`, {
+  input: '1. _foo_\n265. *bazz*\n2. bar',
+  output: (
+    `<ol><li><i>foo</i></li><li><i>bazz</i></li><li>bar</li></ol>`
+  )
+});
+
+testCases.set(`bold and italic mixed list`, {
+  input: '1. __foo__\n265. *bazz*\n756. ___gas___\n2. bar\n832. __*hg*__\n1. **_foob_**',
+  output: (
+    `<ol><li><b>foo</b></li><li><i>bazz</i></li><li><i><b>gas</b></i></li><li>bar</li><li><b><i>hg</i></b></li><li><b><i>foob</i></b></li></ol>`
+  )
+});
+
+testCases.set(`bold and italic mixed order/unordered list`, {
+  input: '- __foo__\n- *bazz*\n- ___gas___\n- bar\n832. __*hg*__\n1. **_foob_**\n- *foo*',
+  output: (
+    `<ul><li><b>foo</b></li><li><i>bazz</i></li><li><i><b>gas</b></i></li><li>bar</li><ol><li><b><i>hg</i></b></li><li><b><i>foob</i></b></li></ol><li><i>foo</i></li></ul>`
+  )
+});
+
 testCases.set(`bold header`, {
   input: `# **bold header**\n# __bold header__`,
   output: (
